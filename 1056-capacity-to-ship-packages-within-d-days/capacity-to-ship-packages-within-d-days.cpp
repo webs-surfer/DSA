@@ -15,14 +15,14 @@ public:
         return cnt+1;
     }
     int shipWithinDays(vector<int>& weights, int days) {
-        int sum = accumulate(weights.begin(), weights.end(), 0);
-        int maxi = *max_element(weights.begin(),weights.end());
-        int s = 0, e = sum, mid;
-        int ans = sum;
+        int e = accumulate(weights.begin(), weights.end(), 0);
+        int s= *max_element(weights.begin(),weights.end());
+        int mid;
+        int ans = e;
         while (s <= e) {
             mid = s + (e - s) / 2;
             int total = findDays(weights, mid);
-            if (total <= days && mid>=maxi) {
+            if (total <= days && mid>=s) {
                 cout << total << " " << mid << endl;
                 ans = min(ans, mid);
                 e = mid - 1;
