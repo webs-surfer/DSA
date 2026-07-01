@@ -1,18 +1,18 @@
 class Solution {
 public:
     bool possible(vector<int>& nums, int k, int mid) {
-        int subarrays = 1;
+        int cnt = 1;
         int sum = 0;
 
         for (int num : nums) {
             if (sum + num <= mid) {
                 sum += num;
             } else {
-                subarrays++;
+                cnt++;
                 sum = num;
             }
         }
-        return subarrays <= k;
+        return cnt <= k;
     }
     int splitArray(vector<int>& nums, int k) {
         int s = *max_element(nums.begin(), nums.end());
