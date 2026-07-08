@@ -1,29 +1,20 @@
 class Solution {
 public:
     string simplifyPath(string path) {
-        if (path.size() == 0) {
-            return path;
-        }
-        path+="/";
+        path += "/";
         stack<string> st;
         int i = 1;
         string str = "";
         while (i < path.size()) {
             if (path[i] == '/') {
                 if (str == ".") {
-                    str = "";
                 } else if (str == "..") {
-                    if (!st.empty()) {
+                    if (!st.empty())
                         st.pop();
-                    }
-                    str = "";
-                } else {
-                    if (str.length() != 0) {
-                        st.push(str);
-                    }
-
-                    str = "";
+                } else if (!str.empty()) {
+                    st.push(str);
                 }
+                str.clear();
                 i++;
                 while (i < path.size() && path[i] == '/') {
                     i++;
@@ -35,10 +26,11 @@ public:
             } // "any element occur"
         }
         string ans = "";
-        if(st.empty()){return "/";}
+        if (st.empty()) {
+            return "/";
+        }
         while (!st.empty()) {
-            ans = st.top() + ans;
-            ans = "/" + ans;
+            ans = "/" + st.top() + ans;
             st.pop();
         }
         return ans;
