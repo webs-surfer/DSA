@@ -12,23 +12,12 @@
 class Solution {
 public:
     TreeNode* searchBST(TreeNode* root, int val) {
-        if (root == nullptr) return nullptr;
-        queue<TreeNode*>q;
-        q.push(root);
-        TreeNode* ans = NULL;
-        while(!q.empty()){
-            TreeNode* temp = q.front();
-            q.pop();
-            if(temp->val==val){
-                ans = temp;
-                break;
+        if (root == NULL) return NULL;
+        while(root){
+            if(root->val==val)return root;
+            if(root->val>val)root=root->left;
+            else root = root->right;
             }
-            if(temp->left && temp->val>val){
-                q.push(temp->left);
-            }
-            if(temp->right && temp->val<val)
-                q.push(temp->right);
-            }
-        return ans;
+        return NULL;
     }
 };
