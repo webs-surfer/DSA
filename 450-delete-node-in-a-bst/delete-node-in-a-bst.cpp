@@ -49,6 +49,29 @@ class Solution {
             solve(newNode, parent);
         }
     }
+    TreeNode* handleRoot(TreeNode* root) {
+        if (!root->left && !root->right)
+            return NULL;
+
+        if (root->left && !root->right)
+            return root->left;
+
+        if (!root->left && root->right)
+            return root->right;
+
+        TreeNode* parent = root;
+        TreeNode* pred = root->left;
+
+        while (pred->right) {
+            parent = pred;
+            pred = pred->right;
+        }
+
+        root->val = pred->val;
+        solve(pred, parent);
+
+        return root;
+    }
 
 public:
     TreeNode* deleteNode(TreeNode* root, int key) {
@@ -68,28 +91,8 @@ public:
         if (!curr)
             return root;
         if (curr == root) {
-
-            if (!root->left && !root->right)
-                return NULL;
-
-            if (root->left && !root->right)
-                return root->left;
-
-            if (!root->left && root->right)
-                return root->right;
-
-            TreeNode* parent = root;
-            TreeNode* pred = root->left;
-
-            while (pred->right) {
-                parent = pred;
-                pred = pred->right;
-            }
-
-            root->val = pred->val;
-            solve(pred, parent);
-
-            return root;
+            TreeNode* newRoot = handleRoot(root);
+            return newRoot;
         } else {
             solve(curr, prev);
         }
